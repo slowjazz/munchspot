@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const request = require('request');
-const cors = require('cors');
+//const cors = require('cors');
 
 //lol
 const clientId = 'mJSModGrCxum1WkxHnIo7A';
@@ -18,7 +18,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 
 //Enable CORS
-app.use(cors());
+//app.use(cors());
 
 // set the home page route
 app.get('/', function(req, res) {
