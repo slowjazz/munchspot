@@ -14,6 +14,7 @@
   "dependencies": {
     "ejs":"~1.0.0",
     "express":"4.15.2",
-    "yelp-fusion": "^1.0.3"
+    "yelp-fusion": "^1.0.3",
+    "request": "2.81.0"
   }
 }
