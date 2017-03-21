@@ -1,14 +1,19 @@
 {
-  "name": "sample",
+  "name": "yelp-project",
   "version": "1.0.0",
   "description": "",
   "main": "sample.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines":{
+    "node": "6.9.1"
+  },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "ejs":"~1.0.0",
+    "express":"4.15.2",
     "yelp-fusion": "^1.0.3"
   }
 }
