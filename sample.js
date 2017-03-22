@@ -1,11 +1,5 @@
 'use strict';
 
-const yelp = require('yelp-fusion');
-
-
-//Edit with keys
-const clientId = 'mJSModGrCxum1WkxHnIo7A';
-const clientSecret = 'hLTYzcmpGjwn1VTiYkEwB2tyK8acPLxbBi8BaAQWnGJP2HlwgwROva6giSVMbhXt';
 
 const searchRequest = {
   term: "Starbucks",

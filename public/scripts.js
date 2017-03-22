@@ -1,16 +1,13 @@
-var access_token;
-var auth_header;
+//Is it good practice to 'nest' everything like this?
+//A-C-A-O happens bc client cant access cross domain.. why is jsonp a workaround?
+//Can bypass ACAO error but GET doesn't return anything... is authorization header wrong?
 
 $(document).ready(function() {
-    $.post("/", function(data) {
-        var client = $.parseJSON(data);
-        access_token = client.access_token;
-        auth_header = 'Bearer '+access_token;
-        console.log(auth_header);
-        //getLocation();
-        form_input();
 
-    });
+  	//getLocation();
+    form_input();
+
+
 });
 
 //Returns data on form submit
@@ -19,12 +16,13 @@ function form_input() {
         console.log("pressed");
         if (event.which == 13) {
             var searchString = $('#search_box').serializeArray();
-            
+
             //CHANGE LOCATION WHEN READY
-            searchString.push({name: 'location',value:'san francisco, ca'});
+            searchString.push({ name: 'location', value: 'san francisco, ca' });
             console.log($.param(searchString));
 
             search(searchString);
+
             event.preventDefault();
 
         }
@@ -34,17 +32,9 @@ function form_input() {
 
 //With access token, returns JSON of get 
 function search(searchString) {
-	console.log("search in progress");
-    $.ajax({
-        type: "GET",
-        url: 'https://api.yelp.com/v3/businesses/search',
-        data: searchString,
-        beforeSend: function(xhr){
-        	xhr.setRequestHeader('Authorization', auth_header);
-        },
-        success: (data)=>{
-        	console.log(data);
-        }
+    $.get("/search", searchString, function(data) {
+        console.log(data);
+        $('p').html(JSON.stringify(data));
     });
 }
 

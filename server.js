@@ -1,13 +1,37 @@
 const express = require('express');
 const app = express();
 const request = require('request');
-//const cors = require('cors');
+const yelp = require('yelp-fusion');
 
-//lol
-const clientId = 'mJSModGrCxum1WkxHnIo7A';
-const clientSecret = 'hLTYzcmpGjwn1VTiYkEwB2tyK8acPLxbBi8BaAQWnGJP2HlwgwROva6giSVMbhXt';
+//Delete this later
+const client_secret = require('./client_secret.js');
 
-// set the port of our application
+var access_token;
+
+yelp.accessToken(client_secret.clientId, client_secret.clientSecret).then(response => {
+    access_token = response.jsonBody.access_token;
+    console.log(access_token);
+
+    const client = yelp.client(access_token);
+
+    apiCalls(client);
+}).catch(e => {
+    console.log(e);
+});
+
+function apiCalls(client) {
+    app.get('/search', (req, res) => {
+        client.search(req.query)
+            .then(response => {
+                console.log("response got GOT");
+                res.send(response.jsonBody.businesses[0]);
+            }).catch(e => {
+                console.log(e);
+            });
+    });
+}
+
+
 // process.env.PORT lets the port be set by Heroku
 const port = process.env.PORT || 8000;
 
@@ -17,26 +41,14 @@ app.set('view engine', 'ejs');
 // make express look in the public directory for assets (css/js/img)
 app.use(express.static(__dirname + '/public'));
 
-//Enable CORS
-//app.use(cors());
-
 // set the home page route
 app.get('/', function(req, res) {
     // ejs render automatically looks in the views folder
     res.render('index');
 });
 
-//Access token POST request
-app.post('/', (req, res) => {
-    request.post({
-            url: 'https://api.yelp.com/oauth2/token',
-            form: { grant_type: 'client_credientials', client_id: clientId, client_secret: clientSecret }
-        },
-        function(err, httpResponse, body) {res.send(body)});
-});
+
 
 app.listen(port, function() {
     console.log('Our app is running on http://localhost:' + port);
 });
-
-var sample = require('./sample.js');
