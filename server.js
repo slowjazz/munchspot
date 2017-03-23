@@ -20,6 +20,7 @@ yelp.accessToken(client_secret.clientId, client_secret.clientSecret).then(respon
 });
 
 function apiCalls(client) {
+    //Basic search
     app.get('/search', (req, res) => {
         client.search(req.query)
             .then(response => {
@@ -29,6 +30,20 @@ function apiCalls(client) {
                 console.log(e);
             });
     });
+
+    //Autocomplete
+    app.get('/autocomplete',(req,res)=>{
+        console.log(req.query.text);
+        client.autocomplete({
+            text: req.query.text
+        }).then(response=>{
+            console.log(response.jsonBody);
+            res.send(response.jsonBody);
+        }).catch(e=>{
+            console.log(e);
+        });
+    });
+
 }
 
 
