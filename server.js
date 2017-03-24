@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const request = require('request');
 const yelp = require('yelp-fusion');
+const cors = require('cors');
+app.use(cors());
 
 //Delete this later
 const client_secret = process.env.CLIENT_SECRET;
