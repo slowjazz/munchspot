@@ -7,8 +7,8 @@ const cors = require('cors');
 app.use(cors());
 
 //Delete this later
-const client_secret = process.env.CLIENT_SECRET;
-const client_id = process.env.CLIENT_ID;
+const client_secret = process.env.CLIENTSECRET;
+const client_id = process.env.CLIENTID;
 
 var access_token;
 
