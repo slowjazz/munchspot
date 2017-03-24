@@ -1,14 +1,16 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const request = require('request');
 const yelp = require('yelp-fusion');
 
 //Delete this later
-const client_secret = require('./client_secret.js');
+const client_secret = process.env.CLIENT_SECRET;
+const client_id = process.env.CLIENT_ID;
 
 var access_token;
 
-yelp.accessToken(client_secret.clientId, client_secret.clientSecret).then(response => {
+yelp.accessToken(client_id, client_secret).then(response => {
     access_token = response.jsonBody.access_token;
     console.log(access_token);
 

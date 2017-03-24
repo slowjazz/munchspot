@@ -47,7 +47,7 @@ function autocomplete_init() {
 }
 
 function searchSelect(searchString) {
-
+    
     if (navigator.geoLocation) {
         console.log("location success");
         navigator.geoLocation.getCurrentPosition(success, error);

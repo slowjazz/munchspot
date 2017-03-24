@@ -37,4 +37,4 @@ jspm_packages
 .node_repl_history
 
 # Client Secret
-client_secret.js
+.env
