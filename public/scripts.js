@@ -1,29 +1,51 @@
-//Is it good practice to 'nest' everything like this?
-//A-C-A-O happens bc client cant access cross domain.. why is jsonp a workaround?
-//Can bypass ACAO error but GET doesn't return anything... is authorization header wrong?
-
-
 $(document).ready(function() {
-    form_input();
-
-});
-
-//Returns data on form submit
-function form_input() {
+    loadLocation();
     autocomplete_init();
-
-}
+});
 
 //Search function
 function search(searchString) {
     $.get("/search", searchString, function(data) {
-        console.log(data);
         $('p').html(JSON.stringify(data));
+        plotResponse(data, 0);
+
     });
 }
 
+function plotResponse(data, i) {
+    var marker = new google.maps.Marker({
+            position: { lat: data[i].coordinates.latitude, lng: data[i].coordinates.longitude},
+            map: map,
+            title: data[i].name
+        });
+
+    // var markers = [];
+
+    // function addMarkers() {
+    //     
+
+    //     for (var i = 0; i < data.length; ++i) {
+    //         markers.push(i);
+    //     }
+    // }
+
+
+    // function clearMarkers() {
+    //     setMapOnAll(null);
+    //     markers = [];
+    // }
+}
+
+
+
 //Autocomplete_init function
 function autocomplete_init() {
+    $('#search_box').keypress((e) => {
+        if (e.which == 13) {
+            searchSelect($('#search_box').serializeArray());
+            e.preventDefault();
+        }
+    });
     $('#search_box').autocomplete({
         source: (request, response) => {
             $.get("/autocomplete", '&text=' + request.term, function(data) {
@@ -40,34 +62,69 @@ function autocomplete_init() {
         select: (event, ui) => {
             $('#search_box').text(ui.item.label);
             searchSelect($('#search_box').serializeArray());
+        },
+
+        messages: {
+            noResults: 'No results',
+            results: function() {}
         }
 
     });
 
 }
 
+//Handles if location box is empty
 function searchSelect(searchString) {
-    
-    if (navigator.geoLocation) {
+    if (!$('#location_box').is('empty')) {
         console.log("location success");
-        navigator.geoLocation.getCurrentPosition(success, error);
-        function success(position) {
-
-            searchString.push({ name: 'latitude', value: position.coords.latitude });
-            searchString.push({ name: 'longitude', value: position.coords.longitude });
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                searchString.push({ name: 'latitude', value: position.coords.latitude });
+                searchString.push({ name: 'longitude', value: position.coords.longitude });
+                search(searchString);
+            });
+        } else {
+            console.log('manual location');
+            searchString.push({ name: 'location', value: $('#location_box').val() })
             search(searchString);
-        }
-    } else {
-        //Nest these in another search box for location
-        searchString.push({ name: 'location', value: 'san francisco, ca' });
-        console.log($.param(searchString));
+            $('#location_box').keypress((e) => {
+                if (e.which == 13) {
+                    search(searchString);
+                    e.preventDefault();
+                }
+            });
 
-        search(searchString);
+        }
+
+    } else { //Possibly implement google maps api autocomplete
+        console.log("Geolocation is not supported by this browser.");
+        if ($('location_box').is('empty')) {
+            alert("Please enter a location.");
+        }
     }
-    //CHANGE LOCATION WHEN READY
 }
 
+function loadLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            $('#location_box').val("Nashville, TN"); //Replace later with google geocoder api
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: position.coords.latitude, lng: position.coords.longitude },
+                zoom: 14
+            });
+        });
+    } else {
+        //Generate default location 
+        alert("Geolocation is disabled!");
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: -34.397, lng: 150.644 },
+            zoom: 4
+        });
+    }
 
-//Function to map search data onto map
+}
 
-//Function to determine what to do with autocomplete data?
+//Update map on location changes, also add functionality to update search if zoomed in/out
+window.initMap = function() {}
+
+//Function to mark a map with a JSON of markers

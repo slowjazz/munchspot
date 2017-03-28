@@ -6,6 +6,9 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700" rel="stylesheet">
     
     <link rel ="stylesheet" type ="text/css" href = "/css/style.css">
+<!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>    
     <script src="scripts.js"></script>
@@ -13,16 +16,51 @@
 <body>
 
 <div class="container">
-    <div>
-    <h1> MUNCHSPOT</h1>
-        <img src = "/img/Yelp_trademark_RGB_outline.png" style="width:30%"/>
+    <h1> welcome to the yelp api for professionals</h1>
+    <img src = "/img/Yelp_trademark_RGB_outline.png" style="width:20%"/>
+
+    <div class = "row">    
+        <div class = "col s6">
         <form>
+        Search: 
             <input type = "text" id="search_box" name = "term"/>
         </form>
-        <p id="return">yo whatup</p>
+        </div>
+        <div class = "col s6">
+        <form>
+        Location:
+            <input type = "text" id = "location_box" name = "location"/>
+        </form>
+        </div>
+        <p id="return"></p>
+    </div>
 
+    <div class = "row">
+        <div class = "col s3" id = "query">
+<!--         could even put search and location in here
+ -->        <form>
+        Number of stars
+        </form>
+        <form>
+        Max distance from current location 
+        </form>
+        <form>
+        Price range
+        </form>
+        </div>
+
+        <div class = "col s5" id = "survey">
+        This or that interface here 
+
+        </div>
+
+        <div class = "col s4" id = "map">
+<!--         also include popup responsive business info at bottom
+ -->    </div>
     </div>
 </div>
     
+    <script src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyCkj_6s3aUuaZJvvVeLbJYgQ4vjGfub9tA&callback=initMap" async defer></script>
 </body>
+
 </html>

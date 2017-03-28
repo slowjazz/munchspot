@@ -28,8 +28,7 @@ function apiCalls(client) {
     app.get('/search', (req, res) => {
         client.search(req.query)
             .then(response => {
-                console.log("response got GOT");
-                res.send(response.jsonBody.businesses[0]);
+                res.send(response.jsonBody.businesses);
             }).catch(e => {
                 console.log(e);
             });
@@ -37,11 +36,9 @@ function apiCalls(client) {
 
     //Autocomplete
     app.get('/autocomplete',(req,res)=>{
-        console.log(req.query.text);
         client.autocomplete({
             text: req.query.text
         }).then(response=>{
-            console.log(response.jsonBody);
             res.send(response.jsonBody);
         }).catch(e=>{
             console.log(e);
