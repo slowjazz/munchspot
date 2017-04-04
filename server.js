@@ -35,12 +35,22 @@ function apiCalls(client) {
     });
 
     //Autocomplete
-    app.get('/autocomplete',(req,res)=>{
+    app.get('/autocomplete', (req, res) => {
         client.autocomplete({
             text: req.query.text
-        }).then(response=>{
+        }).then(response => {
             res.send(response.jsonBody);
-        }).catch(e=>{
+        }).catch(e => {
+            console.log(e);
+        });
+    });
+
+    app.get('/reviews', (req, res) => {
+        console.log(req.query.id);
+        client.reviews(req.query.id).then(response => {
+            console.log(response.jsonBody);
+            res.send(response.jsonBody);
+        }).catch(e => {
             console.log(e);
         });
     });

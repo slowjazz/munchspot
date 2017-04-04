@@ -11,12 +11,14 @@ function search(searchString) {
     $.get("/search", searchString, function(data) {
         $('#display_results').html('');
         deleteMarkers();
-        for(var i = 0; i< 20; ++i){
-            createCard(data, i);
+        for (var i = 0; i < 20; ++i) {
+            createCard(data[i], i);
             plotResponse(data, i);
         }
-        
-        
+
+
+
+
 
     });
 }
@@ -26,26 +28,26 @@ function search(searchString) {
 function createCard(data, i) {
     var new_div = document.createElement('div');
     new_div.setAttribute('class', 'card');
-    new_div.id = "card_"+i;
+    new_div.id = "card_" + i;
     var img_div = document.createElement('div');
-    img_div.setAttribute('class',"card-image waves-effect waves-block waves-light");
+    img_div.setAttribute('class', "card-image waves-effect waves-block waves-light");
 
     var img_wrap = document.createElement('div');
     var img = document.createElement('img');
-    img.setAttribute('class','activator');
-    img.src = data[i].image_url;
-    img_wrap.setAttribute('class',"crop activator");
+    img.setAttribute('class', 'activator');
+    img.src = data.image_url;
+    img_wrap.setAttribute('class', "crop activator");
     img_wrap.appendChild(img);
 
     img_div.appendChild(img_wrap);
     new_div.appendChild(img_div);
     var card_content = document.createElement('div');
-    card_content.setAttribute('class','card-content');
+    card_content.setAttribute('class', 'card-content');
     var card_title = document.createElement('span');
-    card_title.setAttribute('class','card-title activator grey-text text-darken-4');
-    card_title.innerHTML = data[i].name;
+    card_title.setAttribute('class', 'card-title activator grey-text text-darken-4');
+    card_title.innerHTML = data.name;
     var card_title_content = document.createElement('p');
-    card_title_content.innerHTML = data[i].price;
+    card_title_content.innerHTML = data.price;
     card_content.appendChild(card_title);
     card_content.appendChild(card_title_content);
     new_div.appendChild(card_content);
@@ -53,11 +55,15 @@ function createCard(data, i) {
     var card_reveal = document.createElement('div');
     card_reveal.setAttribute('class', 'card-reveal');
     var card_reveal_title = document.createElement('span');
-    card_reveal_title.setAttribute('class','card-title grey-text text-darken-4');
-    card_reveal_title.innerHTML = data[i].name;
-    card_reveal_content  = document.createElement('p');
-    card_reveal_content.innerHTML = data[i].id;
-    card_reveal.appendChild(card_reveal_title);    
+    card_reveal_title.setAttribute('class', 'card-title grey-text text-darken-4');
+    card_reveal_title.innerHTML = data.name;
+    card_reveal_content = document.createElement('p');
+
+    // card_reveal_content.innerHTML = "Reviews:\n";
+    // card_reveal_content.appendChild(genReview(review_data));
+    card_reveal_content.innerHTML = "Phone: " + data.display_phone;
+
+    card_reveal.appendChild(card_reveal_title);
     card_reveal.appendChild(card_reveal_content);
     new_div.appendChild(card_reveal);
 
@@ -70,7 +76,14 @@ function createCard(data, i) {
     //         "src": data[i].image_url
     //     }))).appendChild(document.createElement('div').setAttribute("card-title activator grey-text text-darken-4")););
 
+}
 
+function genReview(data) {
+    var rev = document.createElement('p');
+    for (var i = 0; i < 3; i++) {
+        rev.innerHTML = data.reviews[i].text;
+    }
+    return rev;
 }
 
 function plotResponse(data, i) {
@@ -82,8 +95,8 @@ function plotResponse(data, i) {
     markers.push(marker);
 }
 
-function deleteMarkers(){
-    for(var i = 0; i<markers.length; ++i){
+function deleteMarkers() {
+    for (var i = 0; i < markers.length; ++i) {
         markers[i].setMap(null);
     }
 }
@@ -147,7 +160,7 @@ function searchSelect(searchString) {
         }
         if (priceInput != "") searchString.push({ name: 'price', value: priceInput.split(" ").slice(0, -1) });
 
-        searchString.push({name: 'radius',value: Math.round(parseInt($('#dist_output').text()) * 1609.34)});
+        searchString.push({ name: 'radius', value: Math.round(parseInt($('#dist_output').text()) * 1609.34) });
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
