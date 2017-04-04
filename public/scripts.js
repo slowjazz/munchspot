@@ -1,3 +1,5 @@
+var markers = [];
+
 $(document).ready(function() {
     loadLocation();
     autocomplete_init();
@@ -8,10 +10,10 @@ $(document).ready(function() {
 function search(searchString) {
     $.get("/search", searchString, function(data) {
         $('#display_results').html('');
-        plotResponse(data, 0);
-        
+        deleteMarkers();
         for(var i = 0; i< 20; ++i){
             createCard(data, i);
+            plotResponse(data, i);
         }
         
         
@@ -77,6 +79,13 @@ function plotResponse(data, i) {
         map: map,
         title: data[i].name
     });
+    markers.push(marker);
+}
+
+function deleteMarkers(){
+    for(var i = 0; i<markers.length; ++i){
+        markers[i].setMap(null);
+    }
 }
 
 

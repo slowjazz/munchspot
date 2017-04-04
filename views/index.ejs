@@ -36,38 +36,39 @@
                     <form>
                         <p class="range-field">
                             Max distance from location <i>(mi)</i> :
-                            <input type="range" id="dist_radius" min="0" max="10" value="5">
+                            <input type="range" id="dist_radius" min="0" max="10" value="2">
                         </p>
                     </form>
                 </div>
                 <div class="col s2">
-                    <p id="dist_output">5</p>
+                    <p id="dist_output">2</p>
                 </div>
             </div>
+            Price levels:
             <div class="row">
-                <div class = "col s3">
-                <p>
-                    <input type="checkbox" id="price1" />
-                    <label for="price1">$</label>
-                </p>
+                <div class="col s3">
+                    <p>
+                        <input type="checkbox" id="price1" />
+                        <label for="price1">$</label>
+                    </p>
                 </div>
-                <div class = "col s3">
-                <p>
-                    <input type="checkbox" id="price2" />
-                    <label for="price2">$$</label>
-                </p>
+                <div class="col s3">
+                    <p>
+                        <input type="checkbox" id="price2" />
+                        <label for="price2">$$</label>
+                    </p>
                 </div>
-                <div class = "col s3">
-                <p>
-                    <input type="checkbox" id="price3" />
-                    <label for="price3">$$$</label>
-                </p>
+                <div class="col s3">
+                    <p>
+                        <input type="checkbox" id="price3" />
+                        <label for="price3">$$$</label>
+                    </p>
                 </div>
-                <div class = "col s3">
-                <p>
-                    <input type="checkbox" id="price4" />
-                    <label for="price4">$$$$</label>
-                </p>
+                <div class="col s3">
+                    <p>
+                        <input type="checkbox" id="price4" />
+                        <label for="price4">$$$$</label>
+                    </p>
                 </div>
             </div>
         </div>
@@ -79,7 +80,7 @@
         <div class="container">
             <div class="row">
                 <div class="col s6" id="display_results">
-                    <i id = "notice">Search to display results!</i> 
+                    <h4><i id="notice">Search to display results!</i></h4>
                 </div>
                 <div class="col s4 z-depth-2" id="map">
                     <!--         also include popup responsive business info at bottom
@@ -90,9 +91,8 @@
     </div>
 </body>
 <footer>
-
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkj_6s3aUuaZJvvVeLbJYgQ4vjGfub9tA&callback=initMap" async defer></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
 </footer>
 
 </html>
