@@ -2,14 +2,41 @@ h1{
 	font-family: 'Noto Sans', sans-serif;
 }
 
+.card{
+  width: 400px;
+}
+.crop {
+    width: 540px;
+    height:auto;
+    max-height: 400px;
+    overflow: hidden;
+}
+
+.crop img {
+    width: 300px;
+    height:auto;
+    margin: -75px 0 0 -75px;
+}
+
+.btn-flat {
+   width: 23%;
+}
+
+.container{
+  width: 90% !important;
+}
+
+.wrapper{
+  padding-left: 300px;
+}
  #map {
-   width: 75%;
-   height: 400px;
+   width: 50%;
+   height: 300px;
    background-color: grey;
  }
 
 .ui-state-active {
-    background-color: red;
+    background-color: orange;
     font-weight: bold;
 }
 
